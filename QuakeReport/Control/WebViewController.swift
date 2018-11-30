@@ -20,12 +20,7 @@ class WebViewController: UIViewController {
         if let url = URL(string: urlOfRow) {
             webView.load(URLRequest(url: url))
         }
-        
-//        DataServices.share.selectedQuake?.loadDetailData(dictDetail: <#JSON#>)
-
     }
-
-
 }
 
 

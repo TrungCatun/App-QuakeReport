@@ -54,16 +54,18 @@ class TableViewController: UITableViewController {
             if let index = tableView.indexPathForSelectedRow {
                 toWebControler.urlOfRow = quakeInfos[index.row].url
                 
-                DataServices.share.urlStringDetail = quakeInfos[index.row].detail
+//                DataServices.share.urlStringDetail = quakeInfos[index.row].detail
+
             }
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        DataServices.share.quakeInfosDetail = []
-//        DataServices.share.quakeInfosDetail.append(quakeInfos[indexPath.row])
+//        var arrayData : [String] = []
+        DataServices.share.selectedQuake = quakeInfos[indexPath.row]
+//        print(quakeInfos[indexPath.row])
         
-        DataServices.share.quakeInfosDetail = quakeInfos[indexPath.row]
+        
     }
 
 }
