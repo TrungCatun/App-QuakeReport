@@ -9,15 +9,15 @@
 import Foundation
 
 class QuakeInfo {
-    //    var timeInterval: TimeInterval = 0.0
+
     var dateString: String
     var timeString: String
     var distanceString: String
     var locationName: String
     var mag: Double
+    
     var url: String
     var detail: String
-    //    var abcdxx: String
     
     //
     var felt: Double?
@@ -30,13 +30,13 @@ class QuakeInfo {
     var longitude: String?
     var depth: String?
     
+    var hasDetails = false
     
     
     init( mag: Double,  place: String, timeInterval: TimeInterval, url: String, detail: String) {
         self.mag = mag
         self.url = url
         self.detail = detail
-        //        self.abcdxx = abcdxx
         
         // tach thanh pho va vi tri trong string place
         if place.contains(" of ") {
@@ -53,7 +53,7 @@ class QuakeInfo {
         self.timeString = dateFormater.string(from: Date(timeIntervalSince1970: timeInterval * 1/1000))
         dateFormater.timeStyle = .none
         dateFormater.dateStyle = .medium
-        //        dateFormater.locale = Locale(identifier: "vi")
+//        dateFormater.locale = Locale(identifier: "en_US")
         self.dateString = dateFormater.string(from: Date(timeIntervalSince1970: timeInterval * 1/1000))
     }
     
@@ -70,9 +70,10 @@ class QuakeInfo {
     }
     
     func loadDataDetail(completeHandler: @escaping (QuakeInfo) -> Void) {
+
         DataServices.share.makeDataTaskRequest(urlString: detail) { (dictDetail) in
             guard let dictProperties = dictDetail["properties"] as? JSON else {return}
-            let felt = dictProperties["felt"] as? Double
+            let felt = dictProperties["felt"] as? Double 
             
             let cdi = dictProperties["cdi"] as? Double
             let mmi = dictProperties["mmi"] as? Double
@@ -95,7 +96,7 @@ class QuakeInfo {
             }
             
             if let depth = dictPropertiesOfOrigin["depth"] as? String  {
-                self.depth = depth
+                self.depth = depth + " Km"
             }
             
             // Doi toa do
@@ -114,6 +115,7 @@ class QuakeInfo {
            
             completeHandler(self)
         }
+
     }
 }
 
